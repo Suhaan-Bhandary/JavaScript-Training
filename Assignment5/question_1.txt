@@ -1,0 +1,14 @@
+1. What is the difference between ++i and i++?
+    - ++i is a pre increment operator, which increments i and returns i
+    - i++ is a post increment operator, which increments i and returns the old value
+
+2. What do you think would happen if you pass an index beyond the range of the string? Or if you pass a negative index? Try it out.
+    - It will return undefined for both the above cases
+
+3. Do you think JSON.stringify would work for arrays as well? What about nested objects? What happens if we pass numbers, strings, undefined, null to JSON.stringify?
+    - Yes Json.stringify works for all the above values, it returns json equivalent string of it
+
+4. What happens if you pass a regular/invalid JSON string to JSON.parse? What will happen if such an invalid function runs in the program? Will other parts of the code execute correctly after that?
+    - If we pass a regular json then it will return a valid js value
+    - If we pass a invalid json then it will throw an exception(SyntaxError) and other parts will not execute correctly 
+
