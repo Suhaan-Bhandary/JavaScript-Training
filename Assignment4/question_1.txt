@@ -1,0 +1,46 @@
+1. What happens when you add a for loop/while loop/switch case block inside a function and use return instead of break? 
+Do statements after the loop run?
+What is the return value?
+Can we pass a return value from within a loop? 
+Can you return from inside an if block? What impact does that have?
+Answers: 
+    1. If we use return inside a for loop/while loop/ switch then the function returns from the point to the caller function. 
+    2. No the function return from the point and no statements after the loop are executed.
+    3. The return value is the value returned from the function, it can be of any type. 
+    4. Yes
+    5. Yes we can return from inside an if block, it ends the function and the control is returned to the parent function.
+
+
+2. Take a function that accepts a function as a parameter (also known as callback function). 
+function test(callback){
+ callback();
+}
+
+function callbackFunc(){
+ console.log(“Calling the callback function”)
+ return 5;
+}
+
+Explore the following cases - what is printed in the console, and what gets returned:
+    test(callbackFunc) 
+    test(callbackFunc())
+    test(() => callbackFunc())
+
+What happens when you return callback() from the test function?
+What happens when you return callback from the test function?
+Answers: 
+    test(callbackFunc) 
+    => Calling the callback function
+
+    test(callbackFunc())
+    => callback is not an function
+
+    test(() => callbackFunc())
+    => Calling the callback function
+
+    What happens when you return callback() from the test function?
+    => The return value of the callback will be returned from the test function. In this case it will be 5.
+
+    What happens when you return callback from the test function?
+    => The callback function will be returned from the test function. 
+
