@@ -1,0 +1,70 @@
+.loader {
+  display: none;
+  text-align: center;
+}
+
+.loader.active {
+  display: block;
+}
+
+.filter {
+  display: flex;
+  gap: 1rem;
+
+  margin-bottom: 1rem;
+}
+
+.searchInput,
+#userSortBtn {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: transparent;
+  outline: transparent;
+}
+
+.searchInput {
+  flex-grow: 1;
+
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+
+#userSortBtn {
+  background-color: #28a745;
+  color: #fff;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.userTable {
+  border-collapse: collapse;
+
+  font-family: arial, sans-serif;
+
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.userTable :is(td, th) {
+  border: 1px solid #dee2e6;
+  text-align: left;
+  padding: 8px;
+}
+
+.userTable :is(th, td) {
+  text-align: center;
+}
+
+.userTable tr:nth-child(even) {
+  background-color: #dee2e6;
+}

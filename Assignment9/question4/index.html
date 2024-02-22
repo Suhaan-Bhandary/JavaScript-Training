@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Question 4</title>
+
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <h1>User List</h1>
+
+      <div class="filter">
+        <input
+          type="text"
+          placeholder="Search..."
+          id="searchInput"
+          class="searchInput"
+        />
+        <button id="userSortBtn">Sort Username Asc</button>
+      </div>
+
+      <table id="userTable" class="userTable">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Age</th>
+          </tr>
+        </thead>
+        <tbody id="userTableBody"></tbody>
+      </table>
+
+      <div class="loader" id="loader">
+        <div class="loader-container">
+          <h2>Loading...</h2>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
