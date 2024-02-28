@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "./TodoInput.module.css";
 
 type TodoInputProps = {
   handleAddTodoCallback: (title: string) => void;
@@ -20,9 +21,17 @@ const TodoInput = ({ handleAddTodoCallback }: TodoInputProps) => {
 
   return (
     <form onSubmit={handleInputFormSubmit}>
-      <div className="inputField">
-        <input type="text" value={newTodoTitle} onChange={handleInputChange} />
-        <button type="submit">Add</button>
+      <div className={styles.todoInputField}>
+        <input
+          className={styles.inputField}
+          type="text"
+          value={newTodoTitle}
+          placeholder="Todo..."
+          onChange={handleInputChange}
+        />
+        <button className={styles.submitBtn} type="submit">
+          Add
+        </button>
       </div>
     </form>
   );

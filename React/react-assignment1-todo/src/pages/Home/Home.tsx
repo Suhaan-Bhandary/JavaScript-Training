@@ -2,6 +2,7 @@ import { useState } from "react";
 import TodoElement from "../../components/TodoElement/TodoElement";
 import TodoInput from "../../components/TodoInput/TodoInput";
 import { Todo } from "../../types/todo";
+import styles from "./Home.module.css";
 
 const Home = () => {
   const [todoList, setTodoList] = useState<Todo[]>([]);
@@ -48,13 +49,15 @@ const Home = () => {
   };
 
   return (
-    <div className="wrapper">
-      <div className="home">
+    <div className={styles.wrapper}>
+      <div className={styles.home}>
+        <h1 className={styles.title}>Todo List</h1>
+
         <TodoInput handleAddTodoCallback={handleAddTodo} />
 
-        <div>
+        <div className={styles.todoListContainer}>
           {todoList?.length !== 0 ? (
-            <ul>
+            <ul className={styles.todoList}>
               {todoList?.map((todo, index) => (
                 <TodoElement
                   key={todo.title}
@@ -66,7 +69,7 @@ const Home = () => {
               ))}
             </ul>
           ) : (
-            <p>No todo available...</p>
+            <p className={styles.noTodoNote}>No todo available...</p>
           )}
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { Todo } from "../../types/todo";
+import styles from "./TodoElement.module.css";
 
 type TodoElementProps = {
   index: number;
@@ -22,17 +23,21 @@ const TodoElement = ({
   };
 
   return (
-    <li>
-      <div>
+    <li
+      className={`${styles.todoElement} ${data.isCompleted ? styles.todoCompleted : ""}`}
+    >
+      <div className={styles.leftContainer}>
         <input
           type="checkbox"
           checked={data.isCompleted}
           onChange={handleCheckboxToggle}
+          className={styles.checkbox}
         />
-        <p>{data.title}</p>
-        <p>{String(data.isCompleted)}</p>
+        <p className={styles.title}>{data.title}</p>
       </div>
-      <button onClick={handleDeleteTodo}>Delete</button>
+      <button className={styles.deleteBtn} onClick={handleDeleteTodo}>
+        Delete
+      </button>
     </li>
   );
 };
