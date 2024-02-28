@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 import TodoElement from "../../components/TodoElement/TodoElement";
 import TodoInput from "../../components/TodoInput/TodoInput";
 import { Todo } from "../../types/todo";
@@ -9,15 +10,13 @@ const Home = () => {
 
   const handleAddTodo = (title: string) => {
     if (title === "") {
-      // Todo: Add a toast here
-      console.log("Title cannot be empty.");
+      toast.error("Title cannot be empty.");
       return;
     }
 
     const isTitlePresent = todoList.some((todo) => todo.title === title);
     if (isTitlePresent) {
-      // Todo: Add a toast here
-      console.log("Duplicate title not present.");
+      toast.error("Duplicate title not present.");
       return;
     }
 
