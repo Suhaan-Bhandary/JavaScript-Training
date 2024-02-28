@@ -1,0 +1,7 @@
+Share minimum four differentiation between regular function and arrow functions with one examples
+Answer:
+    1. Arrow function don't provide their own this binding, this is used from outer lexical scope.
+    2. Arrow function cannot be used as a constructor function.
+    3. Arrow functions cannot be accessed before they are initialized in the code.
+    4. Arrow functions cannot be used as generator function. 
+    5. Cannot bind "this" context to an arrow function.
