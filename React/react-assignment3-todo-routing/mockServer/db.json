@@ -1,0 +1,19 @@
+{
+    "todos": [
+        {
+            "title": "Do React Assignment",
+            "isCompleted": false,
+            "createdOn": ""
+        },
+        {
+            "title": "React about useEffect",
+            "isCompleted": true,
+            "createdOn": ""
+        },
+        {
+            "title": "Read about axios",
+            "isCompleted": false,
+            "createdOn": ""
+        }
+    ]
+}
