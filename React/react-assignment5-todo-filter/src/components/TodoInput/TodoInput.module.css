@@ -1,0 +1,33 @@
+.todoInputField {
+  display: flex;
+  flex-direction: column;
+
+  margin-block: 1rem;
+}
+
+.inputField {
+  width: 100%;
+
+  flex-grow: 1;
+
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+
+  padding: 0.25rem 0.5rem;
+}
+
+.error {
+  color: red;
+  font-size: 0.8rem;
+}
+
+.submitBtn {
+  border-radius: 5px;
+  padding: 0.3rem 2rem;
+
+  color: white;
+  background-color: rgb(91, 47, 240);
+
+  font-weight: 500;
+}

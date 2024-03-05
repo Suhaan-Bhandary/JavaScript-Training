@@ -1,0 +1,50 @@
+.notFoundMessage {
+  text-align: center;
+  padding: 1rem;
+}
+
+.TodoDetail {
+  padding-inline: 1rem;
+}
+
+.content {
+  margin-bottom: 1rem;
+}
+
+.deleteBtn {
+  padding: 0.5rem 1.5rem;
+
+  border: 1px solid #ff3b3b;
+  border-radius: 5px;
+
+  color: #ff3b3b;
+  background-color: white;
+
+  font-weight: 500;
+}
+
+.btnConntainer {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.confirmBtn {
+  border-radius: 5px;
+  padding: 0.5rem 1.5rem;
+
+  color: white;
+  background-color: #ff3b3b;
+
+  font-weight: 500;
+}
+
+.closeBtn {
+  border-radius: 5px;
+  padding: 0.5rem 1.5rem;
+
+  color: white;
+  background-color: rgb(91, 47, 240);
+
+  font-weight: 500;
+}
