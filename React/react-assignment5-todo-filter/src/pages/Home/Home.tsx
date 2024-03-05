@@ -23,12 +23,6 @@ const Home = ({ todoList, handleCheckboxToggle }: TodoListProps) => {
   const [todoStatusFilter, setTodoStatusFilter] = useState(-1);
   const [sortByKey, setSortByKey] = useState("");
 
-  const handleSearchValueChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setSearchValue(event.target.value);
-  };
-
   const filteredTodoList = todoList
     .map((todo, index) => ({ ...todo, originalIndex: index }))
     .filter((todo) => {
@@ -64,7 +58,7 @@ const Home = ({ todoList, handleCheckboxToggle }: TodoListProps) => {
               type="text"
               value={searchValue}
               placeholder="Search..."
-              onChange={handleSearchValueChange}
+              onChange={(event) => setSearchValue(event.target.value)}
             />
           </div>
 
