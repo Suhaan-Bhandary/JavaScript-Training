@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <title>Question 1</title>
+  </head>
+  <body>
+    <h1>Question 1</h1>
+    <h2>Embedded Js: <span id="embedded-js"></span></h2>
+    <h2>Embedded Js: <span id="external-js"></span></h2>
+
+    <script src="./script.js"></script>
+    <script>
+      console.log("Hi from embedded!!");
+      const embeddedSpanTag = document.getElementById("embedded-js");
+      embeddedSpanTag.innerText = "Hi from embedded!";
+    </script>
+  </body>
+</html>

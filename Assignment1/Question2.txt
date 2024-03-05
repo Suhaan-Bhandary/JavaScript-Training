@@ -1,0 +1,21 @@
+Where to attach the script tag:   
+
+<html>
+    <head></head>
+    <body>
+        <h1 id="test">Hello World!</h1>
+    </body>
+</html>
+
+Question:
+Given the above html, find out what happens when you try to access the element h1 in javascript (using document.getElementById) and change its content to “Goodbye World” when the script is attached:
+
+1. In the head tag
+=> When accessing the h1 element it will throw TypeError, as it cannot find the h1 element since it has not been yet loaded. 
+
+2. At the start of the body tag
+=> When accessing the h1 element it will throw TypeError, as it cannot find the h1 element since it has not been yet loaded. 
+
+3. At the end of the body tag
+=> It will change the content of the h1 element and make it "Goodbye World"
+
