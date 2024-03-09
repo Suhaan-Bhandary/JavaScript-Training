@@ -1,3 +1,4 @@
+import axios from "axios";
 import { toast } from "react-hot-toast";
 import { Route, Routes } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
@@ -13,7 +14,7 @@ const Router = () => {
     () => toast.error("Error while loading data"),
   );
 
-  const handleAddTodo = (title: string) => {
+  const handleAddTodo = (title: string, dueDate: string) => {
     if (title === "") {
       toast.error("Title cannot be empty.");
       return;
@@ -27,12 +28,18 @@ const Router = () => {
 
     const newTodo = {
       title,
+      dueDate,
       isCompleted: false,
       createdOn: new Date(),
     };
 
-    setTodoList((todoList) => [...todoList, newTodo]);
-    toast.success("Todo added successfully");
+    axios
+      .post("http://localhost:5000/todos", newTodo)
+      .then(() => {
+        setTodoList((todoList) => [...todoList, newTodo]);
+        toast.success("Todo added successfully");
+      })
+      .catch(() => toast.error("Could not add todo"));
   };
 
   const handleCheckboxToggle = (index: number) => {

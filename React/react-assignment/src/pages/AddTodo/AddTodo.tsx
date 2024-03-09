@@ -2,7 +2,7 @@ import TodoInput from "../../components/TodoInput/TodoInput";
 import styles from "./AddTodo.module.css";
 
 type AddTodoProps = {
-  handleAddTodo: (title: string) => void;
+  handleAddTodo: (title: string, dueDate: string) => void;
 };
 
 const AddTodo = ({ handleAddTodo }: AddTodoProps) => {

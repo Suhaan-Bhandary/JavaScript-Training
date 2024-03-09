@@ -1,6 +1,6 @@
 .todoInputField {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
 
   margin-block: 1rem;
 }
@@ -17,9 +17,14 @@
   padding: 0.25rem 0.5rem;
 }
 
+.error {
+  color: red;
+  font-size: 0.8rem;
+}
+
 .submitBtn {
   border-radius: 5px;
-  padding: 0.5rem 1.5rem;
+  padding: 0.3rem 2rem;
 
   color: white;
   background-color: rgb(91, 47, 240);
