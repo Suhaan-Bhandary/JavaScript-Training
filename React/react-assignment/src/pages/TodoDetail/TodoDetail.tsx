@@ -36,7 +36,10 @@ const TodoDetail = ({
 
   return (
     <div className={styles.TodoDetail}>
-      <h1 className={styles.title}>{todo?.title}</h1>
+      <div className={styles.content}>
+        <h1 className={styles.title}>{todo?.title}</h1>
+        <p className={styles.dueDate}>Due Date: {todo.dueDate}</p>
+      </div>
 
       {isDeleteModalOpen ? (
         <Modal>
