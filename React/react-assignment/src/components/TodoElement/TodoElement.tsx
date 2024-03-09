@@ -1,37 +1,20 @@
-import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Todo } from "../../types/todo";
-import Modal from "../Modal/Modal";
 import styles from "./TodoElement.module.css";
 
 type TodoElementProps = {
   index: number;
   data: Todo;
   handleCheckboxToggleCallback: (index: number) => void;
-  handleDeleteTodoCallback: (index: number) => void;
 };
 
 const TodoElement = ({
   index,
   data,
   handleCheckboxToggleCallback,
-  handleDeleteTodoCallback,
 }: TodoElementProps) => {
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
   const handleCheckboxToggle = () => {
     handleCheckboxToggleCallback(index);
-  };
-
-  const handleDeleteTodo = () => {
-    handleDeleteTodoCallback(index);
-  };
-
-  const openDeleteModal = () => {
-    setIsDeleteModalOpen(true);
-  };
-
-  const closeDeleteModal = () => {
-    setIsDeleteModalOpen(false);
   };
 
   return (
@@ -48,24 +31,9 @@ const TodoElement = ({
         <p className={styles.title}>{data.title}</p>
       </div>
 
-      {isDeleteModalOpen ? (
-        <Modal>
-          <h2>Confirm Delete</h2>
-          <p>Are you sure you want to delete "{data.title}"</p>
-          <div className={styles.btnConntainer}>
-            <button className={styles.confirmBtn} onClick={handleDeleteTodo}>
-              Confirm
-            </button>
-            <button className={styles.closeBtn} onClick={closeDeleteModal}>
-              Close Modal
-            </button>
-          </div>
-        </Modal>
-      ) : null}
-
-      <button className={styles.deleteBtn} onClick={openDeleteModal}>
-        Delete
-      </button>
+      <Link to={`/${index}`} className={styles.viewBtn}>
+        View
+      </Link>
     </li>
   );
 };

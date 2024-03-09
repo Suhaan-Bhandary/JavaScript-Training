@@ -1,11 +1,13 @@
 import { Toaster } from "react-hot-toast";
-import Home from "./pages/Home/Home";
+import Navbar from "./components/Navbar/Navbar";
+import Router from "./routes/Router";
 
 function App() {
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
-      <Home />
+      <Navbar />
+      <Router />
     </>
   );
 }
