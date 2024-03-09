@@ -29,7 +29,11 @@ const TodoInput = ({ handleAddTodoCallback }: TodoInputProps) => {
           placeholder="Todo..."
           onChange={handleInputChange}
         />
-        <button className={styles.submitBtn} type="submit">
+        <button
+          className={styles.submitBtn}
+          type="submit"
+          disabled={newTodoTitle === ""}
+        >
           Add
         </button>
       </div>
