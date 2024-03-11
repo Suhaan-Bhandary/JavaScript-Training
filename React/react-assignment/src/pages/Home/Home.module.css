@@ -81,3 +81,25 @@
 .inputField select {
   background: white;
 }
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.buttons input {
+  width: 4rem;
+  padding: 0.25rem;
+
+  outline: transparent;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.buttons button {
+  border-radius: 5px;
+  padding: 0.25rem 1rem;
+  background-color: lightgrey;
+}

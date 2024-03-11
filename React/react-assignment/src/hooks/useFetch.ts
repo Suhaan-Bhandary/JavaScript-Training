@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useRef } from "react";
 
@@ -12,6 +12,7 @@ const useFetch = <T>(
 
   const { data, isLoading, isError } = useQuery({
     queryKey: queryKey,
+    placeholderData: keepPreviousData,
     queryFn: async () => {
       return axios.get<T>(url).then((response) => response.data);
     },

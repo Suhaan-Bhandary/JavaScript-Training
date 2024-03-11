@@ -1,9 +1,9 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import TodoElement from "../../components/TodoElement/TodoElement";
 import { BASE_TODOS_URL } from "../../constants/urls";
 import useFetch from "../../hooks/useFetch";
-import { Todo } from "../../types/todo";
+import { PaginatedTodo } from "../../types/todo";
 import styles from "./Home.module.css";
 
 const sortByKeys = [
@@ -21,17 +21,53 @@ const Home = () => {
   const [todoStatusFilter, setTodoStatusFilter] = useState(-1);
   const [sortByKey, setSortByKey] = useState("");
 
+  const [pagination, setPagination] = useState({
+    page: 1,
+    per_page: 10,
+  });
+
   const todosUrl = new URL(BASE_TODOS_URL);
+  todosUrl.searchParams.set("_page", String(pagination.page));
+  todosUrl.searchParams.set("_per_page", String(pagination.per_page));
   todosUrl.searchParams.set("_sort", sortByKey);
   if (todoStatusFilter !== -1) {
     todosUrl.searchParams.set("isCompleted", String(todoStatusFilter));
   }
 
-  const [todoList, isLoading, isError] = useFetch<Todo[]>(
+  const [todoData, isLoading, isError] = useFetch<PaginatedTodo>(
     todosUrl.href,
-    ["todo-list", sortByKey, todoStatusFilter],
+    [
+      "todo-list",
+      sortByKey,
+      todoStatusFilter,
+      pagination.page,
+      pagination.per_page,
+    ],
     () => toast.error("Error while loading todo list"),
   );
+
+  const todoList = todoData?.data;
+
+  // Function for pagination
+  const handlePrevPage = () => {
+    if (pagination.page === 1) return;
+    setPagination((state) => ({ ...state, page: state.page - 1 }));
+  };
+
+  const handleNextPage = () => {
+    if (pagination.page === todoData?.last) return;
+    setPagination((state) => ({ ...state, page: state.page + 1 }));
+  };
+
+  const handlePerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(event.target.value);
+    if (Number.isNaN(value) || value <= 0) return;
+    setPagination((state) => ({ ...state, per_page: value }));
+  };
+
+  const handleRestPage = () => {
+    setPagination((state) => ({ ...state, page: 1 }));
+  };
 
   const filteredTodoList = useMemo(() => {
     return todoList?.filter((todo) => {
@@ -60,7 +96,10 @@ const Home = () => {
               type="text"
               value={searchValue}
               placeholder="Search..."
-              onChange={(event) => setSearchValue(event.target.value)}
+              onChange={(event) => {
+                setSearchValue(event.target.value);
+                handleRestPage();
+              }}
             />
           </div>
 
@@ -71,6 +110,7 @@ const Home = () => {
                 value={sortByKey}
                 onChange={(event) => {
                   setSortByKey(event.target.value);
+                  handleRestPage();
                 }}
               >
                 <option value={""}>SortBy</option>
@@ -88,6 +128,7 @@ const Home = () => {
                 value={todoStatusFilter}
                 onChange={(event) => {
                   setTodoStatusFilter(Number(event.target.value));
+                  handleRestPage();
                 }}
               >
                 <option value={-1}>Status</option>
@@ -115,6 +156,28 @@ const Home = () => {
           {!isLoading && !filteredTodoList?.length ? (
             <p className={styles.noTodoNote}>No todo available...</p>
           ) : null}
+
+          <div className={styles.buttons}>
+            <button
+              onClick={handlePrevPage}
+              disabled={pagination.page === todoData?.first}
+            >
+              Prev
+            </button>
+            <p>{pagination.page}</p>
+            <button
+              onClick={handleNextPage}
+              disabled={pagination.page === todoData?.last}
+            >
+              Next
+            </button>
+
+            <input
+              type="number"
+              value={pagination.per_page}
+              onChange={handlePerPage}
+            />
+          </div>
         </div>
       </div>
     </div>
