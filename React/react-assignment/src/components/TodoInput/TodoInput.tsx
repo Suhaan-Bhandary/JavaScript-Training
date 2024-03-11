@@ -27,7 +27,6 @@ const TodoInput = ({ handleAddTodoCallback }: TodoInputProps) => {
   const handleDateInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    console.log(event.target);
     setDueDate(event.target.value);
   };
 
