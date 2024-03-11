@@ -31,9 +31,12 @@ const TodoElement = ({
         <p className={styles.title}>{data.title}</p>
       </div>
 
-      <Link to={`/${index}`} className={styles.viewBtn}>
-        View
-      </Link>
+      <div className={styles.rightContainer}>
+        <p>{data.dueDate}</p>
+        <Link to={`/${index}`} className={styles.viewBtn}>
+          View
+        </Link>
+      </div>
     </li>
   );
 };
