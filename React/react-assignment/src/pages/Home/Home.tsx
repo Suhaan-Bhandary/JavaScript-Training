@@ -1,13 +1,14 @@
 import { toast } from "react-hot-toast";
 import TodoElement from "../../components/TodoElement/TodoElement";
 import TodoInput from "../../components/TodoInput/TodoInput";
+import { BASE_TODOS_URL } from "../../contants/urls";
 import useFetch from "../../hooks/useFetch";
 import { Todo } from "../../types/todo";
 import styles from "./Home.module.css";
 
 const Home = () => {
   const [todoList, setTodoList, isLoading] = useFetch<Todo[]>(
-    "http://localhost:5000/todos",
+    BASE_TODOS_URL,
     [],
     () => toast.error("Error while loading data"),
   );
