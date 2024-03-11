@@ -1,18 +1,12 @@
 import { useFormik } from "formik";
-import styles from "./TaskForm.module.css";
 import * as Yup from "yup";
-
-const initialValues = {
-  title: "",
-  description: "",
-  assignee: "",
-  dueDate: "",
-};
+import { TaskFormInitialValues } from "../../helpers/task";
+import styles from "./TaskForm.module.css";
 
 const TaskForm = () => {
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
-      initialValues: initialValues,
+      initialValues: TaskFormInitialValues,
       onSubmit: (values) => {
         console.log(values);
       },
