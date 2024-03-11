@@ -1,12 +1,17 @@
-import { useState } from "react";
 import { toast } from "react-hot-toast";
 import TodoElement from "../../components/TodoElement/TodoElement";
 import TodoInput from "../../components/TodoInput/TodoInput";
+import { BASE_TODOS_URL } from "../../contants/urls";
+import useFetch from "../../hooks/useFetch";
 import { Todo } from "../../types/todo";
 import styles from "./Home.module.css";
 
 const Home = () => {
-  const [todoList, setTodoList] = useState<Todo[]>([]);
+  const [todoList, setTodoList, isLoading] = useFetch<Todo[]>(
+    BASE_TODOS_URL,
+    [],
+    () => toast.error("Error while loading data"),
+  );
 
   const handleAddTodo = (title: string) => {
     if (title === "") {
@@ -55,7 +60,9 @@ const Home = () => {
         <TodoInput handleAddTodoCallback={handleAddTodo} />
 
         <div className={styles.todoListContainer}>
-          {todoList?.length !== 0 ? (
+          {isLoading && <p className={styles.loadingNote}>Loading...</p>}
+
+          {!isLoading && todoList?.length !== 0 ? (
             <ul className={styles.todoList}>
               {todoList?.map((todo, index) => (
                 <TodoElement
@@ -68,7 +75,9 @@ const Home = () => {
               ))}
             </ul>
           ) : (
-            <p className={styles.noTodoNote}>No todo available...</p>
+            !isLoading && (
+              <p className={styles.noTodoNote}>No todo available...</p>
+            )
           )}
         </div>
       </div>
