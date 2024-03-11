@@ -1,12 +1,10 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { toast } from "react-hot-toast";
 import TodoElement from "../../components/TodoElement/TodoElement";
+import { BASE_TODOS_URL } from "../../constants/urls";
+import useFetch from "../../hooks/useFetch";
 import { Todo } from "../../types/todo";
 import styles from "./Home.module.css";
-
-type TodoListProps = {
-  todoList: Todo[];
-  handleCheckboxToggle: (index: number) => void;
-};
 
 const sortByKeys = [
   { key: "Title", value: "title" },
@@ -18,33 +16,37 @@ const statusKeys = [
   { key: "InComplete", value: 0 },
 ] as const;
 
-const Home = ({ todoList, handleCheckboxToggle }: TodoListProps) => {
+const Home = () => {
   const [searchValue, setSearchValue] = useState("");
   const [todoStatusFilter, setTodoStatusFilter] = useState(-1);
   const [sortByKey, setSortByKey] = useState("");
 
-  const filteredTodoList = todoList
-    .map((todo, index) => ({ ...todo, originalIndex: index }))
-    .filter((todo) => {
+  const todosUrl = new URL(BASE_TODOS_URL);
+  todosUrl.searchParams.set("_sort", sortByKey);
+  if (todoStatusFilter !== -1) {
+    todosUrl.searchParams.set("isCompleted", String(todoStatusFilter));
+  }
+
+  const [todoList, isLoading, isError] = useFetch<Todo[]>(
+    todosUrl.href,
+    ["todo-list", sortByKey, todoStatusFilter],
+    () => toast.error("Error while loading todo list"),
+  );
+
+  const filteredTodoList = useMemo(() => {
+    return todoList?.filter((todo) => {
       const lowerCaseSearchValue = searchValue.toLowerCase();
       const lowerCaseTodoTitle = todo.title.toLowerCase();
-
-      if (todoStatusFilter === -1) {
-        return lowerCaseTodoTitle.includes(lowerCaseSearchValue);
-      } else {
-        return (
-          Boolean(todoStatusFilter) === todo.isCompleted &&
-          lowerCaseTodoTitle.includes(lowerCaseSearchValue)
-        );
-      }
+      return lowerCaseTodoTitle.includes(lowerCaseSearchValue);
     });
+  }, [searchValue, todoList]);
 
-  if (sortByKey === "title" || sortByKey === "dueDate") {
-    filteredTodoList.sort((a, b) => {
-      if (a[sortByKey] < b[sortByKey]) return -1;
-      else if (a[sortByKey] > b[sortByKey]) return 1;
-      return 0;
-    });
+  if (isError) {
+    return (
+      <div>
+        <p>Error loading todos</p>
+      </div>
+    );
   }
 
   return (
@@ -99,21 +101,20 @@ const Home = ({ todoList, handleCheckboxToggle }: TodoListProps) => {
           </div>
         </div>
 
-        <div className={styles.todoListContainer}>
-          {filteredTodoList?.length !== 0 ? (
+        <div className={styles.loadingNote}>
+          {isLoading ? <p className={styles.loadingText}>Loading...</p> : null}
+
+          {!isLoading && filteredTodoList?.length ? (
             <ul className={styles.todoList}>
               {filteredTodoList?.map((todo) => (
-                <TodoElement
-                  key={todo.title}
-                  index={todo.originalIndex}
-                  data={todo}
-                  handleCheckboxToggleCallback={handleCheckboxToggle}
-                />
+                <TodoElement key={todo.title} data={todo} />
               ))}
             </ul>
-          ) : (
+          ) : null}
+
+          {!isLoading && !filteredTodoList?.length ? (
             <p className={styles.noTodoNote}>No todo available...</p>
-          )}
+          ) : null}
         </div>
       </div>
     </div>

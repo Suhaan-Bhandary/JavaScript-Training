@@ -28,6 +28,10 @@
   background-color: white;
 }
 
+.tableLoading {
+  opacity: 0.6;
+}
+
 .todoList {
   overflow: auto;
   height: 100%;

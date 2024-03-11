@@ -1,25 +1,29 @@
-import { useEffect, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useEffect, useRef } from "react";
 
-const useFetch = <T>(url: string, initialData: T, onError: () => void) => {
+const useFetch = <T>(
+  url: string,
+  queryKey: (string | number)[],
+  onError: () => void,
+) => {
   // Using useRef to store onError so that we can use it in useEffect
   const onErrorRef = useRef(onError);
 
-  const [data, setData] = useState<T>(initialData);
-  const [isLoading, setIsLoading] = useState(false);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: queryKey,
+    queryFn: async () => {
+      return axios.get<T>(url).then((response) => response.data);
+    },
+  });
 
-  // Fetch data initially
   useEffect(() => {
-    setIsLoading(true);
+    if (isError) {
+      onErrorRef.current();
+    }
+  }, [isError]);
 
-    axios
-      .get<T>(url)
-      .then((response) => setData(response.data))
-      .catch(onErrorRef.current)
-      .finally(() => setIsLoading(false));
-  }, [url]);
-
-  return [data, setData, isLoading] as const;
+  return [data, isLoading, isError] as const;
 };
 
 export default useFetch;
