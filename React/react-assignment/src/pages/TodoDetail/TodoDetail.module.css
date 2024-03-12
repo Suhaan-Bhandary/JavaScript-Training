@@ -1,4 +1,5 @@
-.notFoundMessage {
+.notFoundMessage,
+.isLoadingMessage {
   text-align: center;
   padding: 1rem;
 }

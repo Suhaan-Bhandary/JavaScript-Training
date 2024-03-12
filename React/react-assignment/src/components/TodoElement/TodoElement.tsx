@@ -1,20 +1,30 @@
+import { useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { BASE_TODOS_URL } from "../../constants/urls";
 import { Todo } from "../../types/todo";
 import styles from "./TodoElement.module.css";
 
 type TodoElementProps = {
-  index: number;
   data: Todo;
-  handleCheckboxToggleCallback: (index: number) => void;
 };
 
-const TodoElement = ({
-  index,
-  data,
-  handleCheckboxToggleCallback,
-}: TodoElementProps) => {
-  const handleCheckboxToggle = () => {
-    handleCheckboxToggleCallback(index);
+const TodoElement = ({ data }: TodoElementProps) => {
+  const queryClient = useQueryClient();
+
+  const handleCheckboxToggle = async () => {
+    const newTodo: Todo = {
+      ...data,
+      isCompleted: !data.isCompleted,
+    };
+
+    axios
+      .put(`${BASE_TODOS_URL}/${newTodo.id}`, newTodo)
+      .then(() => {
+        queryClient.invalidateQueries({ queryKey: ["todo-list"] });
+      })
+      .catch(() => toast.error("Could not update todo checkbox"));
   };
 
   return (
@@ -33,7 +43,7 @@ const TodoElement = ({
 
       <div className={styles.rightContainer}>
         <p>{data.dueDate}</p>
-        <Link to={`/${index}`} className={styles.viewBtn}>
+        <Link to={`/${data.id}`} className={styles.viewBtn}>
           View
         </Link>
       </div>

@@ -1,29 +1,48 @@
+import { useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
 import Modal from "../../components/Modal/Modal";
+import { BASE_TODOS_URL } from "../../constants/urls";
+import useFetch from "../../hooks/useFetch";
 import { Todo } from "../../types/todo";
 import styles from "./TodoDetail.module.css";
 
-type TodoDetailProps = {
-  todoList: Todo[];
-  handleDeleteTodoCallback: (index: number) => void;
-};
-
-const TodoDetail = ({
-  todoList,
-  handleDeleteTodoCallback,
-}: TodoDetailProps) => {
+const TodoDetail = () => {
   const { todoId } = useParams();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const todoIndex = Number(todoId);
-  const todo = todoList.find((_, index) => index === todoIndex);
-  if (!todo) {
+  const [todo, isLoading] = useFetch<Todo>(
+    `${BASE_TODOS_URL}/${todoId}`,
+    ["todo-detail", String(todoId)],
+    () => toast.error("Error while fetching todo detail"),
+  );
+
+  if (isLoading) {
+    return <div className={styles.isLoadingMessage}>Loading...</div>;
+  }
+
+  if (!isLoading && !todo) {
     return <div className={styles.notFoundMessage}>Todo not Found</div>;
   }
 
   const handleDeleteTodo = () => {
-    handleDeleteTodoCallback(todoIndex);
+    axios
+      .delete(`${BASE_TODOS_URL}/${todoId}`)
+      .then(() => {
+        queryClient.invalidateQueries({
+          queryKey: ["todo-list"],
+        });
+
+        toast.success("Todo deleted successfully");
+        navigate("/");
+      })
+      .catch(() => {
+        toast.error("Error in deleting Todo");
+      });
   };
 
   const openDeleteModal = () => {
@@ -38,13 +57,13 @@ const TodoDetail = ({
     <div className={styles.TodoDetail}>
       <div className={styles.content}>
         <h1 className={styles.title}>{todo?.title}</h1>
-        <p className={styles.dueDate}>Due Date: {todo.dueDate}</p>
+        <p className={styles.dueDate}>Due Date: {todo?.dueDate}</p>
       </div>
 
       {isDeleteModalOpen ? (
         <Modal>
           <h2>Confirm Delete</h2>
-          <p>Are you sure you want to delete "{todo.title}"</p>
+          <p>Are you sure you want to delete "{todo?.title}"</p>
           <div className={styles.btnConntainer}>
             <button className={styles.confirmBtn} onClick={handleDeleteTodo}>
               Confirm
