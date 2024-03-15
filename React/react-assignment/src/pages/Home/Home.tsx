@@ -53,6 +53,7 @@ const Home = () => {
   const todoList = todoData?.data;
 
   const handlePerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("hi");
     const value = Number(event.target.value);
     if (Number.isNaN(value) || value <= 0) return;
     paginationDispatch({
@@ -170,6 +171,7 @@ const Home = () => {
             </button>
 
             <input
+              placeholder="Per page"
               type="number"
               value={pagination.per_page}
               onChange={handlePerPage}

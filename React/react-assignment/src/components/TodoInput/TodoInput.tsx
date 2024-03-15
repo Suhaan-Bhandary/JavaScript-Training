@@ -63,6 +63,7 @@ const TodoInput = ({ handleAddTodoCallback }: TodoInputProps) => {
       <h2>Todo Form</h2>
       <div className={styles.todoInputField}>
         <input
+          name="newTodo"
           className={styles.inputField}
           type="text"
           value={newTodoTitle}
@@ -76,15 +77,21 @@ const TodoInput = ({ handleAddTodoCallback }: TodoInputProps) => {
       <div className={styles.todoInputField}>
         <input
           className={styles.inputField}
+          name="dueDate"
           type="date"
           value={dueDate}
+          placeholder="Due Date..."
           onChange={handleDateInputChange}
         />
         {errors?.["dueDate"] ? (
           <p className={styles.error}>{errors?.["dueDate"]}</p>
         ) : null}
       </div>
-      <button className={styles.submitBtn} type="submit">
+      <button
+        className={styles.submitBtn}
+        type="submit"
+        disabled={newTodoTitle === "" || dueDate === ""}
+      >
         Add
       </button>
     </form>
