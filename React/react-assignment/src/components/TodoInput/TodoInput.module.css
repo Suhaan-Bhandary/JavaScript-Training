@@ -31,3 +31,8 @@
 
   font-weight: 500;
 }
+
+.submitBtn:disabled {
+  color: white;
+  background-color: rgb(91, 47, 240, 0.4);
+}
